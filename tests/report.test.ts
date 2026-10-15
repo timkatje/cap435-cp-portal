@@ -3,7 +3,7 @@ import { emptyState, type State } from "../src/lib/store";
 
 const sample = (): State => ({
   ...emptyState(),
-  profile: { capid: "123456", teamId: "HS1", roles: ["linux", "captain"] },
+  profile: { capid: "123456", lastName: "O'Brien", grade: "C/SSgt", teamId: "HS1", roles: ["linux", "captain"] },
   items: {
     "fnd-readme": { doneOn: "2026-10-10", note: "private" },
     "fnd-what-cp": { doneOn: "2026-10-09" },
@@ -14,14 +14,33 @@ const sample = (): State => ({
 describe("progress codes", () => {
   it("round-trips through build and parse", () => {
     const code = buildCode(sample(), "2026-10-15");
-    expect(code).toBe("CPP1;c=123456;t=HS1;r=captain,linux;d=20261015;i=fnd-readme,fnd-what-cp");
+    expect(code).toBe("CPP1;c=123456;n=O%27Brien;g=C%2FSSgt;t=HS1;r=captain,linux;d=20261015;i=fnd-readme,fnd-what-cp");
     expect(parseCode(code)).toEqual({
       capid: "123456",
+      lastName: "O'Brien",
+      grade: "C/SSgt",
       teamId: "HS1",
       roles: ["captain", "linux"],
       date: "2026-10-15",
       done: ["fnd-readme", "fnd-what-cp"],
     });
+  });
+
+  it("keeps names with spaces and accents intact", () => {
+    const s = sample();
+    s.profile.lastName = "De La Peña";
+    s.profile.grade = "C/2d Lt";
+    const r = parseCode(buildCode(s, "2026-10-15"))!;
+    expect(r.lastName).toBe("De La Peña");
+    expect(r.grade).toBe("C/2d Lt");
+    expect(findCodes(`x\t${buildCode(s, "2026-10-15")}\n`)[0].lastName).toBe("De La Peña");
+  });
+
+  it("drops unknown grades and unsafe name characters", () => {
+    const r = parseCode("CPP1;c=123456;n=%3Cb%3EBob;g=General;t=HS1;r=;d=20261015;i=")!;
+    expect(r.lastName).toBe("bBob");
+    expect(r.grade).toBe("");
+    expect(parseCode("CPP1;c=123456;n=%E0%A4%A;t=HS1;r=;d=20261015;i=")!.lastName).toBe("");
   });
 
   it("never includes notes", () => {
@@ -57,11 +76,20 @@ describe("progress codes", () => {
 });
 
 describe("pre-filled form links", () => {
-  const values = { capid: "123456", team: "HS1", code: "CPP1;c=123456;t=HS1;r=;d=20261015;i=a,b" };
+  const values = {
+    capid: "123456",
+    lastName: "O'Brien",
+    grade: "C/SSgt",
+    team: "HS1",
+    code: "CPP1;c=123456;t=HS1;r=;d=20261015;i=a,b",
+  };
 
   it("replaces the placeholder answers and keeps other parameters", () => {
-    const tpl = "https://forms.office.com/Pages/ResponsePage.aspx?id=FORMID&r1a=CAPID&r2b=TEAM&r3c=CODE";
+    const tpl =
+      "https://forms.office.com/Pages/ResponsePage.aspx?id=FORMID&r1a=CAPID&r2b=TEAM&r3c=CODE&r4d=LASTNAME&r5e=GRADE";
     const url = new URL(buildFormUrl(tpl, values)!);
+    expect(url.searchParams.get("r4d")).toBe("O'Brien");
+    expect(url.searchParams.get("r5e")).toBe("C/SSgt");
     expect(url.searchParams.get("id")).toBe("FORMID");
     expect(url.searchParams.get("r1a")).toBe("123456");
     expect(url.searchParams.get("r2b")).toBe("HS1");

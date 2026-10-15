@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { SITE } from "../config/site";
+import { cadetName } from "../content/grades";
 import { PATHS } from "../content/paths";
 import { roleName } from "../content/roles";
 import { findCodes, latestByCapid, type Report } from "../lib/report";
@@ -20,7 +21,10 @@ export function LeadersPage() {
   const teams = [...new Set(reports.map((r) => r.teamId))].sort();
   const shown = reports
     .filter((r) => !teamFilter || r.teamId === teamFilter)
-    .sort((a, b) => a.teamId.localeCompare(b.teamId) || a.capid.localeCompare(b.capid));
+    .sort(
+      (a, b) =>
+        a.teamId.localeCompare(b.teamId) || a.lastName.localeCompare(b.lastName) || a.capid.localeCompare(b.capid),
+    );
 
   return (
     <>
@@ -92,6 +96,7 @@ export function LeadersPage() {
               <caption className="visually-hidden">Percent of required items done in each path</caption>
               <thead>
                 <tr>
+                  <th scope="col">Cadet</th>
                   <th scope="col">CAP ID</th>
                   <th scope="col">Team</th>
                   <th scope="col">Roles</th>
@@ -124,9 +129,10 @@ function ReportRow({ r, today }: { r: Report; today: string }) {
   const age = daysUntil(r.date, today);
   return (
     <tr>
-      <th scope="row" className="tabular">
-        {r.capid}
+      <th scope="row" className="nowrap">
+        {cadetName(r.grade, r.lastName) || "—"}
       </th>
+      <td className="tabular">{r.capid}</td>
       <td>{r.teamId}</td>
       <td className="small">{r.roles.map(roleName).join(", ") || "—"}</td>
       <td className={`tabular${age > 14 ? " stale" : ""}`}>

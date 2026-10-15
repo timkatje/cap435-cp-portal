@@ -1,6 +1,7 @@
 import { SITE } from "../config/site";
 import { ItemRow } from "../components/ItemRow";
 import { ProgressBar } from "../components/ProgressBar";
+import { cadetName } from "../content/grades";
 import { pathById } from "../content/paths";
 import { currentOrNextRound, daysUntil, myPaths, nextUp, pathProgress } from "../lib/progress";
 import { doneIds, todayISO, useAppState } from "../lib/store";
@@ -19,7 +20,12 @@ export function Home() {
   return (
     <>
       <section className="hero">
-        <h1>{team ? `${team.name}: what to learn next` : "Learn what each round needs, at your own pace"}</h1>
+        <h1>
+          {profile.lastName
+            ? `${cadetName(profile.grade, profile.lastName)}, here's what to learn next`
+            : "Learn what each round needs, at your own pace"}
+        </h1>
+        {team && <p className="eyebrow">{team.name}</p>}
         <p className="lede">
           Work through the paths below, tick items off as you finish them, and report your progress to your leaders
           once a week.
@@ -28,8 +34,8 @@ export function Home() {
 
       {!profile.teamId && (
         <div className="callout">
-          <strong>First time here?</strong> Pick your team and roles on the <a href="#/me">Me page</a> so this page
-          shows the right paths.
+          <strong>First time here?</strong> Fill in your details, team and roles on the <a href="#/me">Me page</a> so
+          this page shows the right paths.
         </div>
       )}
 

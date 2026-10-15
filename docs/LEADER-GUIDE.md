@@ -20,16 +20,23 @@ accounts, so the form must accept anyone with the link.
 1. In Microsoft Forms (signed in with your wing account), create a form named
    **Progress check-in**.
 2. Settings: **Anyone can respond**. Turn off *Record name*.
-3. Add three questions, all **required**:
+3. Add five questions, all **required**, all type **Text**:
 
-   | # | Question | Type |
+   | # | Question | Notes |
    |---|---|---|
-   | 1 | CAP ID | Text |
-   | 2 | Team | Text |
-   | 3 | Progress code | Text, **Long answer** |
+   | 1 | Last name | |
+   | 2 | Grade | Text, not a choice, so the pre-filled answer always fits |
+   | 3 | CAP ID | |
+   | 4 | Team | |
+   | 5 | Progress code | Turn on **Long answer** |
+
+   Only the progress code is needed for the Leaders page, which reads name and
+   grade from inside it. The other questions make the Excel sheet readable.
 
 4. Open the **…** menu at the top right and choose **Get pre-filled URL**.
    Type these exact words as the answers, then copy the link:
+   - Last name: `LASTNAME`
+   - Grade: `GRADE`
    - CAP ID: `CAPID`
    - Team: `TEAM`
    - Progress code: `CODE`
@@ -49,8 +56,8 @@ and that was a deliberate choice.
 2. Select all the cells and copy them. Or save the sheet as CSV.
 3. On the site, open **Leaders** and paste the cells, or choose **Open CSV file**.
 
-The table shows each cadet's newest report: team, roles, report date and percent
-done in each path. Reports more than 14 days old are highlighted. Nothing you paste
+The table shows each cadet's newest report: grade and last name, CAP ID, team,
+roles, report date and percent done in each path. Reports more than 14 days old are highlighted. Nothing you paste
 is uploaded or saved. The table is built in your browser and disappears when you
 leave the page.
 
@@ -79,8 +86,8 @@ before you merge.
 
 ## How cadets use it
 
-1. Open the site and go to **Me**. Enter CAP ID, pick a team and tick the roles the
-   captain gave them.
+1. Open the site and go to **Me**. Enter last name, grade and CAP ID, pick a team
+   and tick the roles the captain gave them.
 2. **Home** shows what to do next: the core paths, the paths for their roles and
    the paths for the next round.
 3. Tick items as they finish them. A private "What I learned" note can go on any

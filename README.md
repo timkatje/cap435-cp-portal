@@ -4,8 +4,9 @@ A training site for our CAP squadron's CyberPatriot teams. It puts the best free
 material into ordered **learning paths**, lets cadets tick items off at their own
 pace, and gives leaders a simple way to see progress.
 
-- **No accounts and no server.** Progress is saved in each cadet's browser.
-- **No names, emails or contact details.** Cadets enter only a CAP ID, a team and roles.
+- **No accounts, no server, no database.** Progress is saved in each cadet's browser.
+- **Minimal personal data.** Cadets enter a last name, grade, CAP ID, team and roles.
+  No first names, emails, phone numbers, addresses, birthdays or family details.
 - **Reporting goes to the wing's Microsoft 365.** Cadets press *Report my progress*,
   which opens a pre-filled Microsoft Form. Leaders paste the responses into the
   *Leaders* page to see a progress table, built in their browser.

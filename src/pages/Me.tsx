@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import { SITE } from "../config/site";
+import { CADET_GRADES } from "../content/grades";
 import { ROLES } from "../content/roles";
 import type { RoleId } from "../content/types";
 import { buildCode, buildFormUrl } from "../lib/report";
 import {
+  cleanName,
   doneIds,
   emptyState,
   exportJSON,
@@ -24,9 +26,15 @@ export function MePage() {
 
   const today = todayISO();
   const code = buildCode(state, today);
-  const formUrl = buildFormUrl(SITE.progressFormUrl, { capid: profile.capid, team: profile.teamId, code });
+  const formUrl = buildFormUrl(SITE.progressFormUrl, {
+    capid: profile.capid,
+    lastName: profile.lastName,
+    grade: profile.grade,
+    team: profile.teamId,
+    code,
+  });
   const capidOk = /^\d{4,7}$/.test(profile.capid);
-  const ready = capidOk && !!profile.teamId;
+  const ready = capidOk && !!profile.lastName.trim() && !!profile.grade && !!profile.teamId;
   const doneCount = doneIds(state).size;
 
   const toggleRole = (id: RoleId, on: boolean) =>
@@ -68,12 +76,34 @@ export function MePage() {
     <>
       <h1>Me</h1>
       <p className="lede">
-        Everything on this page is saved only in this browser. Only your CAP ID, team, roles and the list of finished
-        items are sent, and only when you press Report.
+        Everything on this page is saved only in this browser. Your details, roles and the list of finished items are
+        sent to your leaders' form only when you press Report. Your notes never leave this device.
       </p>
 
       <section className="panel">
         <h2>Your details</h2>
+        <div className="field">
+          <label htmlFor="lastname">Last name</label>
+          <input
+            id="lastname"
+            autoComplete="family-name"
+            maxLength={40}
+            value={profile.lastName}
+            onChange={(e) => setProfile({ ...profile, lastName: cleanName(e.target.value) })}
+            onBlur={() => setProfile({ ...profile, lastName: profile.lastName.trim() })}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="grade">Grade</label>
+          <select id="grade" value={profile.grade} onChange={(e) => setProfile({ ...profile, grade: e.target.value })}>
+            <option value="">Choose your grade</option>
+            {CADET_GRADES.map((g) => (
+              <option key={g} value={g}>
+                {g}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="field">
           <label htmlFor="capid">CAP ID</label>
           <input
@@ -83,11 +113,7 @@ export function MePage() {
             maxLength={7}
             value={profile.capid}
             onChange={(e) => setProfile({ ...profile, capid: e.target.value.replace(/\D/g, "") })}
-            aria-describedby="capid-help"
           />
-          <p id="capid-help" className="small quiet">
-            Only needed for reporting. Your name is never asked for or stored.
-          </p>
         </div>
         <div className="field">
           <label htmlFor="team">Team</label>
@@ -127,7 +153,7 @@ export function MePage() {
           {state.lastReportOn ? `Last reported ${state.lastReportOn}.` : "You haven't reported yet."} Report once a week
           and before each round.
         </p>
-        {!ready && <p className="callout">Enter your CAP ID and pick your team first.</p>}
+        {!ready && <p className="callout">Fill in your last name, grade, CAP ID and team first.</p>}
         <label htmlFor="code" className="small">
           Your progress code
         </label>
@@ -161,6 +187,10 @@ export function MePage() {
         <p className="small">
           Clearing your browser or switching computers loses your ticks. Save a backup file now and then, and load it on
           a new computer.
+        </p>
+        <p className="small">
+          <strong>On a shared or school computer,</strong> save a backup, then erase everything when you're done so the
+          next person can't see your details.
         </p>
         <div className="actions">
           <button type="button" className="btn" onClick={downloadBackup}>

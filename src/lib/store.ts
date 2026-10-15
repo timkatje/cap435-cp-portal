@@ -1,16 +1,28 @@
 import { useSyncExternalStore } from "react";
+import { isGrade } from "../content/grades";
 import type { RoleId } from "../content/types";
 
 /*
  * Everything a cadet does is saved in their own browser (localStorage).
- * Nothing is sent anywhere unless they press "Report my progress".
+ * Nothing is sent anywhere unless they press "Report my progress", and then
+ * only to the wing's Microsoft Form.
  */
 
 export interface Profile {
-  /** CAP ID. Only stored here and sent in the cadet's own progress reports. */
   capid: string;
+  lastName: string;
+  /** Cadet grade, e.g. "C/SSgt". */
+  grade: string;
   teamId: string;
   roles: RoleId[];
+}
+
+/** Letters (any language), spaces, apostrophes, hyphens and periods; 40 characters at most. */
+export function cleanName(raw: string): string {
+  return raw
+    .replace(/[^\p{L}\p{M}' .-]/gu, "")
+    .replace(/\s+/g, " ")
+    .slice(0, 40);
 }
 
 export interface ItemState {
@@ -31,7 +43,7 @@ const KEY = "cap435-portal:v1";
 
 export const emptyState = (): State => ({
   v: 1,
-  profile: { capid: "", teamId: "", roles: [] },
+  profile: { capid: "", lastName: "", grade: "", teamId: "", roles: [] },
   items: {},
 });
 
@@ -43,6 +55,8 @@ export function parseState(raw: unknown): State | null {
   const p = (r.profile ?? {}) as Record<string, unknown>;
   const profile: Profile = {
     capid: typeof p.capid === "string" && /^\d{0,7}$/.test(p.capid) ? p.capid : "",
+    lastName: typeof p.lastName === "string" ? cleanName(p.lastName).trim() : "",
+    grade: typeof p.grade === "string" && isGrade(p.grade) ? p.grade : "",
     teamId: typeof p.teamId === "string" ? p.teamId.slice(0, 16) : "",
     roles: Array.isArray(p.roles) ? (p.roles.filter((x) => typeof x === "string").slice(0, 10) as RoleId[]) : [],
   };

@@ -476,7 +476,7 @@ fieldset.field {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 8px;
 }
-.role {
+.field .role {
   display: flex;
   gap: 10px;
   align-items: flex-start;
@@ -486,7 +486,7 @@ fieldset.field {
   cursor: pointer;
   font-weight: normal;
 }
-.role span {
+.role > span {
   display: flex;
   flex-direction: column;
 }
@@ -566,7 +566,8 @@ tbody tr:last-child > * {
   text-align: right;
 }
 td.tabular,
-th.tabular {
+th.tabular,
+.nowrap {
   white-space: nowrap;
 }
 .pct-full {

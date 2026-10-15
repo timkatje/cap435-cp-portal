@@ -5,8 +5,12 @@ TypeScript, published to GitHub Pages. See `docs/PLAN.md` for scope and phases.
 
 ## Hard rules
 
-- **No personal data.** Never add fields for names, emails, phone numbers or
-  addresses. The only cadet data is CAP ID, team id and role ids.
+- **Minimal personal data.** The only cadet data is CAP ID, last name, cadet
+  grade, team id and role ids. It is stored in the cadet's browser and sent
+  only to the wing's Microsoft Form. Never add first names, emails, phone
+  numbers, addresses, birthdays, schools, parent details or photos.
+- **No databases.** Shared data lives in the wing's Microsoft 365 (Forms and
+  Excel). A future API should write there, not to a database of our own.
 - **No server, no tracking.** No analytics, cookies, external fonts, CDNs or
   network calls. The production build has a strict CSP (`vite.config.ts`).
 - **Item ids in `src/content/paths.ts` are permanent.** They live in cadets'

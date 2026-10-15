@@ -8,9 +8,12 @@ It is **not** a messaging platform.
 
 1. **Training first.** Cadets teach themselves from ordered paths. Leaders see
    progress without chasing anyone.
-2. **Almost no personal data.** No names, emails or contact details. A CAP ID,
-   team and roles are the only things about a cadet that leave their device, and
-   they go to the wing's Microsoft 365.
+2. **Minimal personal data, no databases.** Last name, grade, CAP ID, team and
+   roles are the only things about a cadet that leave their device, and they go
+   only to the wing's Microsoft 365. Never collected: first names, emails, phone
+   numbers, addresses, birthdays, schools, family details, photos. If a central
+   API is added later, it writes to the wing's M365 (Excel or a SharePoint
+   list), not to a database of our own.
 3. **Knowledge stays in each team.** Later phases that add team spaces keep each
    team's work away from other teams.
 4. **Transparent for CPP.** No private messages, ever. Senior members share equal

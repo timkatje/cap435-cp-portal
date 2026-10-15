@@ -13,11 +13,13 @@ describe("saved data", () => {
     const s = importJSON(
       JSON.stringify({
         v: 1,
-        profile: { capid: "12ab", teamId: "HS1", roles: ["linux", 5] },
+        profile: { capid: "12ab", lastName: "Sm<i>th", grade: "Supreme Leader", teamId: "HS1", roles: ["linux", 5] },
         items: { "fnd-readme": { doneOn: "2026-10-10" }, "BAD ID!": { doneOn: "2026-10-10" }, "x-1": { doneOn: "yesterday" } },
       }),
     )!;
     expect(s.profile.capid).toBe("");
+    expect(s.profile.lastName).toBe("Smith");
+    expect(s.profile.grade).toBe("");
     expect(s.profile.roles).toEqual(["linux"]);
     expect(Object.keys(s.items)).toEqual(["fnd-readme"]);
   });

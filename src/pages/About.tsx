@@ -21,13 +21,23 @@ export function AboutPage() {
         <h2>Your data</h2>
         <ul>
           <li>There are no accounts, no cookies, no analytics and no tracking.</li>
-          <li>Your ticks, notes, CAP ID, team and roles are saved only in this browser.</li>
+          <li>Your last name, grade, CAP ID, team, roles, ticks and notes are saved only in this browser.</li>
           <li>
-            When you press <em>Report my progress</em>, your CAP ID, team, roles and the list of finished items go to
-            your leaders' Microsoft Form in the wing's Microsoft 365. Your notes are never sent.
+            When you press <em>Report my progress</em>, your last name, grade, CAP ID, team, roles and the list of
+            finished items go to your leaders' Microsoft Form in the wing's Microsoft 365. Your notes and the dates you
+            finished each item are never sent.
           </li>
-          <li>The site never asks for your name, email, address or phone number.</li>
-          <li>Clearing your browser data erases your progress. Use the backup on the Me page.</li>
+          <li>
+            The site never asks for your first name, email, phone number, address, birthday, school or anything about
+            your family.
+          </li>
+          <li>
+            On a shared computer, save a backup and then use <em>Erase everything on this device</em> on the Me page.
+          </li>
+          <li>
+            The site is hosted on GitHub Pages. Like any website host, GitHub keeps standard server logs, which include
+            visitors' IP addresses. The site makes no other network requests.
+          </li>
         </ul>
       </section>
     </>
