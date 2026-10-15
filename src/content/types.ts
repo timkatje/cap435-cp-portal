@@ -6,7 +6,6 @@ export type Source =
   | "Microsoft"
   | "Ubuntu"
   | "Debian"
-  | "GCFGlobal"
   | "OverTheWire"
   | "GCHQ"
   | "Team task";
@@ -49,7 +48,7 @@ export interface Item {
   note?: string;
 }
 
-export type PathKind = "core" | "os" | "skill" | "role";
+export type PathKind = "core" | "os" | "skill" | "role" | "basics";
 
 export interface Path {
   id: string;

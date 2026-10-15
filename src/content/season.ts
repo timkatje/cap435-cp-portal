@@ -18,7 +18,8 @@ export const ROUNDS: Round[] = [
     name: "Practice Round",
     start: "2026-10-07",
     end: "2026-10-20",
-    focusPaths: ["windows", "windows-server", "linux-mint"],
+    // Server is in this round but not in Round 1, so practice the Round 1 images.
+    focusPaths: ["windows", "linux-mint"],
     images: "Windows 11, Windows Server 2022, Linux Mint 21",
     scored: false,
   },

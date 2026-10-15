@@ -28,16 +28,18 @@ export function daysUntil(today: string, date: string): number {
 
 /**
  * Paths for this cadet, in the order to work on them: everyone's core paths,
- * then the paths for their roles, then the OS paths for the next round.
+ * then the paths for their roles, then the OS paths for the next round, then
+ * the general computer basics.
  */
 export function myPaths(roles: string[], today: string): Path[] {
   const ids: string[] = [];
   const add = (id: string) => {
     if (!ids.includes(id)) ids.push(id);
   };
-  PATHS.filter((p) => p.forRoles.length === 0).forEach((p) => add(p.id));
+  PATHS.filter((p) => p.kind === "core").forEach((p) => add(p.id));
   PATHS.filter((p) => p.forRoles.some((r) => roles.includes(r))).forEach((p) => add(p.id));
   currentOrNextRound(today)?.focusPaths.forEach(add);
+  PATHS.filter((p) => p.kind === "basics").forEach((p) => add(p.id));
   return ids.map((id) => PATHS.find((p) => p.id === id)).filter((p): p is Path => !!p);
 }
 

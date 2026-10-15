@@ -10,6 +10,7 @@ const GROUPS: { kind: PathKind; title: string; blurb: string }[] = [
   { kind: "os", title: "Operating systems", blurb: "One path per competition image. Leads go deep; everyone else should know the basics." },
   { kind: "skill", title: "Challenges", blurb: "The parts of a round that aren't one operating system." },
   { kind: "role", title: "Team roles", blurb: "For cadets holding these jobs on their team." },
+  { kind: "basics", title: "Computer basics", blurb: "General computer skills for anyone who needs them." },
 ];
 
 export function PathsPage() {

@@ -10,7 +10,7 @@ export function AboutPage() {
         </p>
         <p>
           It links to outside material and copies none of it. The CP Toolkit, CyberPatriot, Cisco NetAcad, Microsoft,
-          Ubuntu, Debian, GCFGlobal, OverTheWire and CyberChef material belongs to its owners.
+          Ubuntu, Debian, OverTheWire and CyberChef material belongs to its owners.
         </p>
         <p>
           This is an unofficial tool. It is not affiliated with or endorsed by the CyberPatriot Program Office. Dates

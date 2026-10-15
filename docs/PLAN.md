@@ -25,7 +25,9 @@ It is **not** a messaging platform.
 
 ### Phase 1: static training site (this repository, now)
 
-- Learning paths: Foundations and Round skills for everyone, one path per
+- Learning paths: Start here (CP Toolkit's beginner lessons) and Round practice
+  for everyone, then Computer basics (NetAcad and general skills, after Round 1
+  this season), one path per
   competition image, Cisco networking, forensics, and paths for captain and
   secretary roles.
 - Team roles, including captain and co-captain, picked by the cadet.

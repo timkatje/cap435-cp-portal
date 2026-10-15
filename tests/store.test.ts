@@ -27,7 +27,7 @@ describe("saved data", () => {
 
 describe("progress", () => {
   it("counts only required items", () => {
-    const path = pathById("foundations")!;
+    const path = pathById("computer-basics")!;
     const required = path.items.filter((i) => !i.optional);
     const optional = path.items.find((i) => i.optional)!;
     const pr = pathProgress(path, new Set([required[0].id, optional.id]));
@@ -36,12 +36,13 @@ describe("progress", () => {
 
   it("orders paths: core first, then role paths, then the next round's paths", () => {
     const ids = myPaths(["network"], "2026-10-15").map((p) => p.id);
-    expect(ids.slice(0, 3)).toEqual(["foundations", "round-skills", "networking"]);
+    expect(ids.slice(0, 3)).toEqual(["start-here", "round-practice", "networking"]);
     expect(ids).toContain("windows");
+    expect(ids[ids.length - 1]).toBe("computer-basics");
   });
 
   it("suggests the first unfinished required items", () => {
-    const paths = [pathById("foundations")!];
+    const paths = [pathById("start-here")!];
     const first = paths[0].items[0].id;
     expect(nextUp(paths, new Set([first]), 1)[0].item.id).not.toBe(first);
   });
